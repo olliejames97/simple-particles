@@ -1,4 +1,7 @@
-use crate::components::{particle::particle_movement, particle_system::particle_spawn};
+use crate::components::{
+    particle::{particle_killer, particle_movement},
+    particle_system::particle_spawn,
+};
 use bevy::{core::FixedTimestep, prelude::*};
 use components::{particle::Particle, particle_system::ParticleSystem};
 
@@ -16,6 +19,7 @@ fn main() {
                 .with_run_criteria(FixedTimestep::step(1.0 / 60.))
                 .with_system(particle_movement),
         )
+        .add_system(particle_killer)
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
         .run();
 }

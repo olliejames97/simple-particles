@@ -1,7 +1,8 @@
 use super::particle::{particle_sprite_default, Particle};
 use bevy::{
+    core::Time,
     math::Vec3,
-    prelude::{Commands, Component, Query, Transform},
+    prelude::{Commands, Component, Query, Res, Transform},
     sprite::SpriteBundle,
 };
 #[derive(Component)]
@@ -22,7 +23,7 @@ impl Default for ParticleSystem {
     }
 }
 
-pub fn particle_spawn(mut commands: Commands, query: Query<&ParticleSystem>) {
+pub fn particle_spawn(time: Res<Time>, mut commands: Commands, query: Query<&ParticleSystem>) {
     for spawner in query.iter() {
         for _ in 1..spawner.spawn_rate {
             commands
@@ -34,6 +35,7 @@ pub fn particle_spawn(mut commands: Commands, query: Query<&ParticleSystem>) {
                     ..particle_sprite_default()
                 })
                 .insert(Particle {
+                    time_spawned: time.seconds_since_startup(),
                     ..Default::default()
                 });
         }
