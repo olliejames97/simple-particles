@@ -1,4 +1,4 @@
-use crate::helpers::rand::_rand;
+use crate::helpers::{math::progress, rand::_rand};
 use bevy::prelude::*;
 #[derive(Clone)]
 struct FloatOverTime(f32, f32);
@@ -71,27 +71,8 @@ pub fn particle_sizer(time: Res<Time>, mut query: Query<(&Particle, &mut Transfo
         let death_point = particle.time_spawned + particle.max_life_ms;
         let tss = time.time_since_startup().as_millis() as f64;
         let life_lived = 1. - ((death_point - tss) / particle.max_life_ms) as f32;
-        // time spawned = 100
-        // max_life = 5
-        // death_point = time spawned + max_life = 105
-        // time since startup = 102.5
-        // percent life =  death point - time since / max_life
-        // 2.5 * 2 = 5
-        //
-        // start_size = 0
-        // max_size = 15
-        // life_lived = 0.5
-        // current_size = 30
-        // start = 50
-        //  end = 105
-        // percent = 0.5
-        // diff = end - start = 55
-        //  55 * 0.5 + 50 = 22.5 + 50 =  diff *
-        // current = x
-        let start_size = particle.size_start;
-        let max_size = particle.size_end;
-        let diff = max_size - start_size;
-        let size = diff * life_lived + start_size;
+
+        let size = progress(particle.size_start, particle.size_end, life_lived);
         transform.scale = Vec3::new(size, size, size);
     })
 }
