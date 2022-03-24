@@ -1,3 +1,12 @@
+/**
+ * Todo:
+ * Refactor files, maybe seperate files
+ *  - - 1 for components component spawner helpers, defautls etc.
+ *  - 1 for related systems
+ *  - eg.
+ *  - -/particle/component.rs + /particle/systems.rs
+ * Find out how plugins work
+ */
 use crate::components::{
     particle::{particle_killer, particle_movement, particle_sizer},
     particle_system::particle_spawn,
