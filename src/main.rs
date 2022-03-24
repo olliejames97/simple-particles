@@ -1,8 +1,12 @@
 use crate::components::{
-    particle::{particle_killer, particle_movement},
+    particle::{particle_killer, particle_movement, particle_sizer},
     particle_system::particle_spawn,
 };
-use bevy::{core::FixedTimestep, prelude::*};
+use bevy::{
+    core::FixedTimestep,
+    diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
+    prelude::*,
+};
 use components::{particle::Particle, particle_system::ParticleSystem};
 
 mod components;
@@ -15,7 +19,7 @@ fn main() {
         .add_startup_system(setup)
         .add_system_set(
             SystemSet::new()
-                .with_run_criteria(FixedTimestep::step(1.0 / 60.))
+                .with_run_criteria(FixedTimestep::step(60. * 2. / 60.))
                 .with_system(particle_spawn),
         )
         .add_system_set(
@@ -24,7 +28,10 @@ fn main() {
                 .with_system(particle_movement),
         )
         .add_system(particle_killer)
+        .add_system(particle_sizer)
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
+        .add_plugin(LogDiagnosticsPlugin::default())
+        .add_plugin(FrameTimeDiagnosticsPlugin::default())
         .run();
 }
 

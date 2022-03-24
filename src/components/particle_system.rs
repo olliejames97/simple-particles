@@ -18,7 +18,7 @@ impl Default for ParticleSystem {
                 translation: Vec3::new(0., 0., 0.),
                 ..Default::default()
             },
-            spawn_rate: 3,
+            spawn_rate: 600,
         }
     }
 }
@@ -35,7 +35,7 @@ pub fn particle_spawn(time: Res<Time>, mut commands: Commands, query: Query<&Par
                     ..particle_sprite_default()
                 })
                 .insert(Particle {
-                    time_spawned: time.seconds_since_startup(),
+                    time_spawned: time.time_since_startup().as_millis() as f64,
                     ..Default::default()
                 });
         }
