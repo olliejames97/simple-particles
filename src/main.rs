@@ -6,6 +6,8 @@
  *  - eg.
  *  - -/particle/component.rs + /particle/systems.rs
  * Find out how plugins work
+ * Replace size_start size_end stuff with the functionality to automate any property on particle
+ * fn automate(particle.size,  end_val, particle.life_progress()) somethin like that
  */
 use crate::components::{
     particle::{particle_killer, particle_movement, particle_sizer},
