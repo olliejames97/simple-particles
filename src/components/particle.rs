@@ -1,7 +1,5 @@
 use crate::helpers::{math::progress, rand::_rand};
 use bevy::prelude::*;
-#[derive(Clone)]
-struct FloatOverTime(f32, f32);
 #[derive(Component, Clone)]
 pub struct Particle {
     pub speed: f32,

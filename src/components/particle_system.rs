@@ -5,6 +5,7 @@ use bevy::{
     prelude::{Commands, Component, Query, Res, Transform},
     sprite::SpriteBundle,
 };
+
 #[derive(Component)]
 pub struct ParticleSystem {
     transform: Transform,
