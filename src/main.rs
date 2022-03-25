@@ -1,26 +1,22 @@
 /**
  * Todo:
- * Refactor files, maybe seperate files
- *  - - 1 for components component spawner helpers, defautls etc.
- *  - 1 for related systems
- *  - eg.
- *  - -/particle/component.rs + /particle/systems.rs
+
  * Find out how plugins work
  * Replace size_start size_end stuff with the functionality to automate any property on particle
  * fn automate(particle.size,  end_val, particle.life_progress()) somethin like that
  */
-use crate::components::{
-    particle::{particle_killer, particle_movement, particle_sizer},
-    particle_system::particle_spawn,
-};
 use bevy::{
     core::FixedTimestep,
     diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
     prelude::*,
 };
-use components::{particle::Particle, particle_system::ParticleSystem};
+use particle::component::Particle;
+use particle_system::component::ParticleSystem;
 
-mod components;
+use crate::{particle_system::systems::*, particle::systems::{particle_movement, particle_killer, particle_sizer}};
+
+mod particle_system;
+mod particle;
 mod helpers;
 
 fn main() {

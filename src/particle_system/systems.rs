@@ -1,33 +1,7 @@
-use super::particle::{particle_sprite_default, Particle};
-use bevy::{
-    core::Time,
-    math::Vec3,
-    prelude::{Commands, Component, Query, Res, Transform},
-    sprite::SpriteBundle, ecs::schedule::IntoSystemDescriptor,
-};
+use bevy::prelude::*;
+use crate::particle::component::{particle_sprite_default, Particle};
 
-
-
-#[derive(Component)]
-pub struct ParticleSystem {
-    transform: Transform,
-    spawn_rate: i64,
-    
-}
-
-
-
-impl Default for ParticleSystem {
-    fn default() -> Self {
-        ParticleSystem {
-            transform: Transform {
-                translation: Vec3::new(0., 0., 0.),
-                ..Default::default()
-            },
-            spawn_rate: 1000,
-        }
-    }
-}
+use super::component::ParticleSystem;
 
 pub fn particle_spawn(time: Res<Time>, mut commands: Commands, query: Query<&ParticleSystem>) {
     for spawner in query.iter() {
