@@ -23,6 +23,7 @@ impl Default for Particle {
     }
 }
 
+
 pub fn particle_sprite_default() -> SpriteBundle {
     let size = 4.;
     SpriteBundle {
@@ -64,13 +65,17 @@ pub fn particle_killer(
     }
 }
 
+// Returns progress of natural  life from 0 to 1
+fn get_life_progress(time: &Res<Time>, particle: &Particle) -> f32{
+    let death_point = particle.time_spawned + particle.max_life_ms;
+    let tss = time.time_since_startup().as_millis() as f64;
+    let life_lived = 1. - ((death_point - tss) / particle.max_life_ms) as f32;
+    return life_lived
+}
+
 pub fn particle_sizer(time: Res<Time>, mut query: Query<(&Particle, &mut Transform)>) {
     query.for_each_mut(|(particle, mut transform)| {
-        let death_point = particle.time_spawned + particle.max_life_ms;
-        let tss = time.time_since_startup().as_millis() as f64;
-        let life_lived = 1. - ((death_point - tss) / particle.max_life_ms) as f32;
-
-        let size = progress(particle.size_start, particle.size_end, life_lived);
+        let size = progress(particle.size_start, particle.size_end, get_life_progress(&time, particle));
         transform.scale = Vec3::new(size, size, size);
     })
 }

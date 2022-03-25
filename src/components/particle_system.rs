@@ -3,14 +3,19 @@ use bevy::{
     core::Time,
     math::Vec3,
     prelude::{Commands, Component, Query, Res, Transform},
-    sprite::SpriteBundle,
+    sprite::SpriteBundle, ecs::schedule::IntoSystemDescriptor,
 };
+
+
 
 #[derive(Component)]
 pub struct ParticleSystem {
     transform: Transform,
     spawn_rate: i64,
+    
 }
+
+
 
 impl Default for ParticleSystem {
     fn default() -> Self {
@@ -19,7 +24,7 @@ impl Default for ParticleSystem {
                 translation: Vec3::new(0., 0., 0.),
                 ..Default::default()
             },
-            spawn_rate: 600,
+            spawn_rate: 1000,
         }
     }
 }
